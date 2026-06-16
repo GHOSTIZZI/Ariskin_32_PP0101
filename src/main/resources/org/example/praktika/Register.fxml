@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.praktika.RegisterController"
+            prefHeight="400.0" prefWidth="600.0">
+
+<children>
+    <VBox alignment="CENTER" spacing="24"
+          AnchorPane.topAnchor="40"
+          AnchorPane.bottomAnchor="40"
+          AnchorPane.leftAnchor="40"
+          AnchorPane.rightAnchor="40">
+
+        <Label style="-fx-font-size: 20px; -fx-font-weight: 600; -fx-text-fill: #777777; -fx-font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;"
+               text="Создание аккаунта">
+
+        </Label>
+
+        <Label style="-fx-font-size: 14px; -fx-text-fill: #777777; -fx-font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;"
+               text="Введите логин и пароль"/>
+
+        <TextField fx:id="newUsername"
+                   maxWidth="300"
+                   promptText="Логин"
+                   style="-fx-font-size: 14px; -fx-padding: 12 14; -fx-background-color: #E3E3E3; -fx-border-color: #E3E3E3; -fx-border-width: 1px; -fx-border-radius: 24px; -fx-background-radius: 24; -fx-text-fill: black ; -fx-prompt-text-fill: #777777; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 2, 0, 0, 1); -fx-font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;"/>
+
+        <TextField fx:id="newPassword"
+                       maxWidth="300"
+                       promptText="Пароль"
+                   style="-fx-font-size: 14px; -fx-padding: 12 14; -fx-background-color: #E3E3E3; -fx-border-color: #E3E3E3; -fx-border-width: 1px; -fx-border-radius: 24px; -fx-background-radius: 24; -fx-text-fill: black ; -fx-prompt-text-fill: #777777; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 2, 0, 0, 1); -fx-font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;"/>
+
+        <Button text="Создать аккаунт"
+                maxWidth="200"
+                onAction="#createAccount"
+                style=" -fx-font-size: 14px; -fx-padding: 12 24; -fx-background-color: #333333; -fx-text-fill: #ffffff;  -fx-background-radius: 24; -fx-border-radius: 30px; -fx-cursor: hand; -fx-font-family: 'Segoe UI', 'Helvetica Neue', sans-serif; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 2, 0, 0, 1);"/>
+
+        <Button text="Назад"
+                onAction="#openLoginForm"
+                style="-fx-background-color: #E3E3E3; -fx-text-fill: black; -fx-font-size: 13px; -fx-padding: 8 16; -fx-background-radius: 24; -fx-border-radius: 30px; -fx-cursor: hand; -fx-font-family: 'Segoe UI', 'Helvetica Neue', sans-serif; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 2, 0, 0, 1);" />
+
+        <Label fx:id="registerStatusLabel"
+               maxWidth="300"
+               style="-fx-font-size: 13px; -fx-text-fill: #ff6b6b; -fx-alignment: center; -fx-wrap-text: true;" />
+    </VBox>
+</children>
+</AnchorPane>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.CategoryAxis?>
+<TabPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+         fx:controller="org.example.praktika.AdminPanelController" tabClosingPolicy="UNAVAILABLE">
+
+    <Tab text="Товары">
+        <HBox spacing="10" style="-fx-padding: 10;">
+            <!-- Левая часть: Таблица товаров -->
+            <TableView fx:id="productTable" HBox.hgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="idCol" text="ID" prefWidth="40"/>
+                    <TableColumn fx:id="nameCol" text="Название" prefWidth="150"/>
+                    <TableColumn fx:id="priceCol" text="Цена" prefWidth="80"/>
+                    <TableColumn fx:id="brandCol" text="Бренд" prefWidth="100"/>
+                    <TableColumn fx:id="materialCol" text="Материал" prefWidth="100"/>
+                    <TableColumn fx:id="seasonCol" text="Сезон" prefWidth="80"/>
+                    <TableColumn fx:id="genderCol" text="Пол" prefWidth="60"/>
+                    <TableColumn fx:id="categoryCol" text="Категория" prefWidth="100"/>
+                </columns>
+            </TableView>
+
+            <!-- Правая часть: Панель редактирования -->
+            <ScrollPane prefWidth="550" fitToWidth="true" hbarPolicy="NEVER">
+                <VBox spacing="10" style="-fx-padding: 0 10 0 0;">
+                    <Label text="Данные товара" style="-fx-font-weight: bold;"/>
+                    <TextField fx:id="nameField" promptText="Название"/>
+                    <HBox spacing="10">
+                        <TextField fx:id="priceField" promptText="Текущая цена (продажи)" HBox.hgrow="ALWAYS"/>
+                        <TextField fx:id="oldPriceField" promptText="Старая цена (для скидки)" HBox.hgrow="ALWAYS" style="-fx-border-color: #ff9800; -fx-border-radius: 4; -fx-background-radius: 4;"/>
+                    </HBox>
+
+                    <TextField fx:id="brandField" promptText="Бренд"/>
+                    <TextField fx:id="materialField" promptText="Материал"/>
+                    <TextField fx:id="seasonField" promptText="Сезон"/>
+                    <TextField fx:id="genderField" promptText="Пол"/>
+                    <TextField fx:id="categoryField" promptText="Категория (например: Куртки)"/>
+                    <TextField fx:id="imagesField" promptText="Картинки (ссылки через запятую)"/>
+                    <TextArea fx:id="descField" promptText="Описание" prefHeight="80" wrapText="true"/>
+
+                    <HBox spacing="5">
+                        <Button text="Добавить товар" onAction="#handleAddProduct" style="-fx-background-color: #4caf50; -fx-text-fill: white;" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                        <Button text="Сохранить товар" onAction="#handleUpdateProduct" style="-fx-background-color: #2196f3; -fx-text-fill: white;" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                        <Button text="Очистить поля" onAction="#clearFields" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                    </HBox>
+                    <Button text="Удалить товар" onAction="#handleDeleteProduct" style="-fx-background-color: #f44336; -fx-text-fill: white;" maxWidth="Infinity"/>
+
+                    <Separator />
+
+                    <!-- БЛОК ВАРИАЦИЙ -->
+                    <Label text="Существующие вариации (Выберите строку для изменения):" style="-fx-font-weight: bold;"/>
+
+                    <!-- Таблица существующих цветов и размеров -->
+                    <TableView fx:id="variantsTable" prefHeight="130">
+                        <columns>
+                            <TableColumn fx:id="colorCol" text="Цвет" prefWidth="90"/>
+                            <TableColumn fx:id="sizeCol" text="Размер" prefWidth="65"/>
+                            <TableColumn fx:id="stockCol" text="Склад" prefWidth="65"/>
+                        </columns>
+                    </TableView>
+
+                    <!-- КНОПКА СНЯТИЯ С ВИ ТРИНЫ (БЕЗОПАСНАЯ) -->
+                    <Button text="Снять размер с продажи (Обнулить склад)" onAction="#handleDeleteVariant" style="-fx-background-color: #ff9800; -fx-text-fill: white;" maxWidth="Infinity"/>
+
+                    <Label text="Редактирование / Добавление вариации:" style="-fx-font-weight: bold;"/>
+                    <TextField fx:id="colorField" promptText="Цвет"/>
+                    <TextField fx:id="sizeField" promptText="Размер"/>
+                    <TextField fx:id="stockField" promptText="Количество на складе"/>
+
+                    <!-- ПАНЕЛЬ КНОПОК ДЛЯ РАЗМЕРОВ -->
+                    <HBox spacing="5">
+                        <Button text="Поставить на склад (+)" onAction="#handleAddVariant" style="-fx-background-color: #673ab7; -fx-text-fill: white;" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                        <Button text="Сохранить количество" onAction="#handleUpdateVariant" style="-fx-background-color: #00bcd4; -fx-text-fill: white;" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                    </HBox>
+                </VBox>
+            </ScrollPane>
+        </HBox>
+    </Tab>
+
+    <Tab text="Пользователи">
+        <TableView fx:id="userTable">
+            <columns>
+                <TableColumn fx:id="userIdCol" text="ID" prefWidth="50"/>
+                <TableColumn fx:id="userLoginCol" text="Логин" prefWidth="150"/>
+                <TableColumn fx:id="userRoleCol" text="Роль" prefWidth="100"/>
+            </columns>
+        </TableView>
+    </Tab>
+
+    <!-- ВКЛАДКА ЗАКАЗЫ -->
+    <Tab text="Заказы">
+        <TableView fx:id="orderTable">
+            <columns>
+                <TableColumn fx:id="orderIdCol" text="ID Заказа" prefWidth="80"/>
+                <TableColumn fx:id="orderUserIdCol" text="ID Пользователя" prefWidth="130"/>
+                <TableColumn fx:id="orderQuantityCol" text="Кол-во" prefWidth="80"/>
+                <TableColumn fx:id="orderPriceCol" text="Сумма заказа" prefWidth="120"/>
+                <TableColumn fx:id="orderDateCol" text="Дата создания" prefWidth="180"/>
+                <TableColumn fx:id="emailCol" text="Дата создания" prefWidth="180"/>
+                <TableColumn fx:id="deliveryAddressColl" text="Адрес Доставки" prefWidth="180"/>
+            </columns>
+        </TableView>
+    </Tab>
+
+    <Tab text="Аналитика">
+        <VBox spacing="15" style="-fx-padding: 20;">
+            <Label text="Ключевые показатели" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+            <!-- Добавьте эту таблицу в VBox вкладки "Аналитика" -->
+            <Label text="Топ-5 товаров по продажам:" style="-fx-font-weight: bold;"/>
+            <TableView fx:id="analyticsTable" prefHeight="200">
+                <columns>
+                    <TableColumn fx:id="prodNameCol" text="Название товара" prefWidth="250"/>
+                    <TableColumn fx:id="prodCountCol" text="Продано (шт)" prefWidth="120"/>
+                </columns>
+            </TableView>
+            <!-- Сетка с метриками -->
+            <HBox spacing="20">
+                <VBox style="-fx-background-color: #f0f0f0; -fx-padding: 15; -fx-background-radius: 5;" HBox.hgrow="ALWAYS">
+                    <Label text="Общая выручка" style="-fx-text-fill: #7f8c8d;"/>
+                    <Label fx:id="revenueLabel" text="0 руб." style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+                </VBox>
+                <VBox style="-fx-background-color: #f0f0f0; -fx-padding: 15; -fx-background-radius: 5;" HBox.hgrow="ALWAYS">
+                    <Label text="Всего заказов" style="-fx-text-fill: #7f8c8d;"/>
+                    <Label fx:id="ordersCountLabel" text="0" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+                </VBox>
+                <VBox style="-fx-background-color: #f0f0f0; -fx-padding: 15; -fx-background-radius: 5;" HBox.hgrow="ALWAYS">
+                    <Label text="Средний чек" style="-fx-text-fill: #7f8c8d;"/>
+                    <Label fx:id="avgCheckLabel" text="0 руб." style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+                </VBox>
+            </HBox>
+
+            <Separator />
+
+            <!-- График продаж -->
+            <BarChart fx:id="salesChart" title="Топ-5 товаров по продажам" prefHeight="300">
+                <xAxis><CategoryAxis fx:id="xAxis" label="Товары"/></xAxis>
+                <yAxis><NumberAxis label="Количество (шт)"/></yAxis>
+            </BarChart>
+
+            <Button text="Обновить статистику" onAction="#refreshAnalytics" style="-fx-background-color: #4caf50; -fx-text-fill: white;"/>
+        </VBox>
+    </Tab>
+</TabPane>

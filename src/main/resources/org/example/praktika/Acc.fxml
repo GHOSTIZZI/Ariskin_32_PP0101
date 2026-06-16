@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.praktika.AccController"
+      spacing="15"
+      alignment="TOP_CENTER"
+      style="-fx-padding: 20; -fx-background-color: #E3E3E3;"
+      prefHeight="600.0" prefWidth="950.0">
+
+
+    <!-- Верхняя панель навигации -->
+    <HBox spacing="15" alignment="CENTER_LEFT" style="-fx-pref-width: 100%;">
+        <Button text="←"
+                onAction="#handleBack"
+                AnchorPane.leftAnchor="25.0"
+                AnchorPane.topAnchor="25.0"
+                style="
+                    -fx-font-size: 25px;
+                    -fx-padding: 9 16 9 16;
+                    -fx-text-fill: black;
+                    -fx-border-width: 1px;
+                    -fx-background-radius: 50%;
+                    -fx-border-radius: 50%;
+                    -fx-cursor: hand;
+                    -fx-background-color: #ffffff;
+                    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);"/>
+
+        <Label text="Личный кабинет" style="-fx-font-size: 22px; -fx-text-fill: black; -fx-font-weight: bold;"/>
+    </HBox>
+
+    <!-- Основной контент: Две колонки -->
+    <HBox spacing="25" VBox.vgrow="ALWAYS" style="-fx-pref-width: 100%;">
+
+        <!-- ЛЕВАЯ КОЛОНКА: Профиль пользователя -->
+        <VBox spacing="20" alignment="TOP_CENTER" prefWidth="300"
+              style="-fx-background-color: #ffffff; -fx-background-radius: 16; -fx-border-color: #ffffff; -fx-border-radius: 16; -fx-padding: 25;">
+
+            <ImageView fx:id="avatarImage"
+                       fitWidth="160"
+                       fitHeight="160"
+                       preserveRatio="true"
+                       style="-fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.05), 15, 0, 0, 0);"/>
+
+            <VBox spacing="5" alignment="CENTER">
+                <Label text="Вы вошли как:" style="-fx-font-size: 12px; -fx-text-fill: #888888;"/>
+                <Label fx:id="loginLabel" text="[Загрузка...]" style="-fx-font-size: 22px; -fx-text-fill: black ; -fx-font-weight: bold;" wrapText="true" textAlignment="CENTER"/>
+            </VBox>
+
+            <Separator style="-fx-background-color: #2d2d2d;"/>
+
+            <!-- Кнопка переключения/активации просмотра истории -->
+
+            <Button text="Выйти из аккаунта" onAction="#handleLogout" prefWidth="240"
+                    style="-fx-background-color: #ff9800; -fx-text-fill: #000000; -fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 12; -fx-background-radius: 8; -fx-cursor: hand;"/>
+
+        </VBox>
+
+        <!-- ПРАВАЯ КОЛОНКА: Контейнер истории покупок -->
+        <VBox spacing="15" HBox.hgrow="ALWAYS" style="-fx-background-color: #ffffff; -fx-background-radius: 16; -fx-padding: 20; -fx-border-color: #ffffff; -fx-border-radius: 16;">
+            <Label text="История ваших заказов" style="-fx-font-size: 18px; -fx-text-fill: white; -fx-font-weight: bold;"/>
+
+            <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS">
+                <VBox fx:id="ordersContainer" spacing="12">
+                    <padding>
+                        <Insets right="10"/>
+                    </padding>
+                    <Label text="Нажмите «История покупок» для загрузки списка..." style="-fx-text-fill: #666666; -fx-font-size: 14px;"/>
+                </VBox>
+            </ScrollPane>
+        </VBox>
+
+    </HBox>
+</VBox>

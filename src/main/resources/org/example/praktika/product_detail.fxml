@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="900.0" prefWidth="1200.0" style="-fx-background-color: #E3E3E3;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.praktika.ProductDetailController">
+
+    <children>
+
+        <Button text="←"
+                onAction="#handleBack"
+                AnchorPane.leftAnchor="25.0"
+                AnchorPane.topAnchor="25.0"
+                style="
+                    -fx-font-size: 25px;
+                    -fx-padding: 9 16 9 16;
+                    -fx-text-fill: black;
+                    -fx-border-width: 1px;
+                    -fx-background-radius: 50%;
+                    -fx-border-radius: 50%;
+                    -fx-cursor: hand;
+                    -fx-background-color: #ffffff;
+                    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);"/>
+
+
+        <HBox spacing="40.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="60.0">
+            <children>
+
+                <!-- ЛЕВАЯ ЧАСТЬ: Фотографии -->
+                <VBox alignment="CENTER" spacing="12.0" prefWidth="400.0" HBox.hgrow="NEVER">
+                    <children>
+                        <ImageView fx:id="productImage"
+                                   fitHeight="550.0"
+                                   fitWidth="500.0"
+                                   pickOnBounds="true"
+                                   preserveRatio="true"
+                                   style="-fx-background-color: #ffffff; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 4);" />
+
+                        <HBox alignment="CENTER" spacing="15.0">
+                            <children>
+                                <Button fx:id="btnPrevImg"
+                                         mnemonicParsing="false"
+                                         onAction="#handlePrevImage"
+                                         prefWidth="40" prefHeight="40"
+                                         style="-fx-background-color: #ffffff;
+               -fx-background-radius: 20px;
+               -fx-border-radius: 20px;
+               -fx-border-color: #dddddd;
+               -fx-font-size: 16px;
+               -fx-cursor: hand;
+               -fx-padding: 0;
+               -fx-background-insets: 0;"
+                                         text="&lt;" />
+                                <Label fx:id="imageCounterLabel" text="1 / 1" textFill="#555555" style=" -fx-font-size: 16px;" />
+
+                                <Button fx:id="btnNextImg"
+                                        mnemonicParsing="false"
+                                        onAction="#handleNextImage"
+                                        prefWidth="40" prefHeight="40"
+                                        style="-fx-background-color: #ffffff;
+               -fx-background-radius: 20px;
+               -fx-border-radius: 20px;
+               -fx-border-color: #dddddd;
+               -fx-font-size: 16px;
+               -fx-cursor: hand;
+               -fx-padding: 0;
+               -fx-background-insets: 0;"
+                                        text="&gt;" />
+                            </children>
+                        </HBox>
+
+                        <ScrollPane fitToHeight="true" minHeight="90.0" prefHeight="90.0" style="-fx-background: transparent; -fx-background-color: transparent;" vbarPolicy="NEVER" hbarPolicy="AS_NEEDED">
+                            <content>
+                                <HBox fx:id="thumbnailsContainer" spacing="8.0" alignment="CENTER_LEFT">
+                                    <padding><Insets bottom="5.0" left="5.0" right="5.0" top="5.0" /></padding>
+                                </HBox>
+                            </content>
+                        </ScrollPane>
+                    </children>
+                </VBox>
+
+                <!-- ПРАВАЯ ЧАСТЬ: Информация -->
+                <!-- ПРАВАЯ ЧАСТЬ: Весь контент внутри одного ScrollPane -->
+                <ScrollPane fitToWidth="true"
+                            style="-fx-background: transparent; -fx-background-color: #E3E3E3;"
+                            hbarPolicy="NEVER"
+                            vbarPolicy="AS_NEEDED"
+                            HBox.hgrow="ALWAYS">
+                    <content>
+                        <VBox spacing="20.0" style="-fx-background-color: #E3E3E3; -fx-padding: 20;">
+                            <children>
+                                <!-- Верхняя часть: Название, Цена, Характеристики -->
+                                <Label fx:id="nameLabel" text="Название товара" textFill="#212121">
+                                    <font><Font name="System Bold" size="28.0" /></font>
+                                </Label>
+
+                                <HBox spacing="20.0" alignment="CENTER_LEFT">
+                                    <Label fx:id="priceLabel" text="0.00 ₽" textFill="#b388ff">
+                                        <font><Font name="System Bold" size="24.0" /></font>
+                                    </Label>
+                                    <Label fx:id="stockLabel" text="Выберите размер и цвет" textFill="#757575" style="-fx-font-size: 16px;" />
+                                </HBox>
+
+                                <VBox spacing="8.0">
+                                    <Label fx:id="brandLabel" text="Бренд:" textFill="#555555" style="-fx-font-size: 16px;"/>
+                                    <Label fx:id="materialLabel" text="Материал:" textFill="#555555" style="-fx-font-size: 16px;" />
+                                    <Label fx:id="seasonLabel" text="Сезон:" textFill="#555555" style="-fx-font-size: 16px;"/>
+                                    <Label fx:id="genderLabel" text="Пол:" textFill="#555555" style="-fx-font-size: 16px;"/>
+                                    <Label fx:id="categoryLabel" text="Категория:" textFill="#555555" style="-fx-font-size: 16px;" />
+                                </VBox>
+
+                                <Label text="Выберите вариант:" textFill="#212121" style="-fx-font-weight: bold; -fx-font-size: 16px;" />
+                                <FlowPane fx:id="variantsPane" hgap="10.0" vgap="10.0" minHeight="50.0" />
+
+                                <Button fx:id="addToCartButton" visible="false" onAction="#handleAddToCart" prefHeight="50.0" prefWidth="280.0"
+                                        style="-fx-background-color: #b388ff; -fx-text-fill: white; -fx-background-radius: 30; -fx-cursor: hand; -fx-font-weight: bold;" text="Добавить в корзину">
+                                    <font><Font size="16.0" /></font>
+                                </Button>
+
+                                <!-- НИЖНЯЯ ЧАСТЬ: Описание -->
+                                <Separator style="-fx-padding: 20 0 0 0;" />
+                                <VBox spacing="10.0">
+                                    <Label text="Описание:" textFill="#212121" style="-fx-font-weight: bold; -fx-font-size: 18px;" />
+                                    <Label fx:id="descriptionLabel" alignment="TOP_LEFT" textFill="#555555" wrapText="true" style="-fx-font-size: 16px;"/>
+                                </VBox>
+                            </children>
+                        </VBox>
+                    </content>
+                </ScrollPane>
+            </children>
+        </HBox>
+    </children>
+</AnchorPane>

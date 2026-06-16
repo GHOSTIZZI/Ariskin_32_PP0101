@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+
+<ScrollPane fitToWidth="true" style="-fx-background: #E3E3E3;" stylesheets="@scrollbar.css"
+            xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.praktika.Form1">
+
+    <!-- ИСПРАВЛЕНО: Убраны prefWidth="1920" и prefHeight="1080", чтобы разметка стала адаптивной -->
+    <BorderPane fx:id="rootContainer"  style=" -fx-background-color: #E3E3E3;" >
+
+        <top>
+            <BorderPane style="-fx-background-color: #121212; -fx-padding: 10; -fx-border-color: #333333; -fx-border-width: 0 0 1 0;">
+                <left>
+                    <HBox alignment="CENTER_LEFT" spacing="12" style="-fx-padding: 0 12;">
+                        <ImageView fx:id="cartImage" fitWidth="28" fitHeight="28"
+                                   onMouseClicked="#openCart" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" />
+
+                        <Label fx:id="adminPanelBtn" onMouseClicked="#openAdminPanel"
+                               style="-fx-font-size: 30px; -fx-text-fill: white ; -fx-cursor: hand;" text="🛠" visible="false" />
+                    </HBox>
+                </left>
+
+                <center>
+                    <HBox alignment="CENTER">
+                        <HBox alignment="CENTER" spacing="8" style="-fx-background-color: #2d2d2d; -fx-background-radius: 24; -fx-padding: 4 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 4, 0, 0, 2);">
+                            <Label style="-fx-font-size: 18px; -fx-text-fill: #888888;" text="🔍" />
+                            <TextField fx:id="searchField" promptText="Поиск"
+                                       style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-font-size: 16px; -fx-text-fill: #ffffff; -fx-prompt-text-fill: #777777;" HBox.hgrow="ALWAYS">
+                                <padding>
+                                    <Insets right="5.0" />
+                                </padding>
+                            </TextField>
+                        </HBox>
+                    </HBox>
+                </center>
+
+                <right>
+                    <HBox alignment="CENTER_LEFT" spacing="16" style="-fx-padding: 0 12;">
+
+                        <ImageView fx:id="accImage" fitWidth="30" fitHeight="30"
+                                   onMouseClicked="#openAccount" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" />
+
+                        <Label onMouseClicked="#logout" style="-fx-font-size: 30px; -fx-text-fill: white; -fx-cursor: hand;" text="⏻">
+                            <padding>
+                                <Insets left="10.0" right="10.0" />
+                            </padding>
+                        </Label>
+                    </HBox>
+                </right>
+            </BorderPane>
+        </top>
+
+        <center>
+            <VBox fx:id="mainContent" alignment="TOP_CENTER" maxWidth="1300" spacing="24" style="-fx-padding: 20; -fx-background-color: #E3E3E3;" BorderPane.alignment="CENTER">
+
+                <!-- БЛОК ТОВАРОВ -->
+                <!-- БЛОК ЗАГОЛОВКА И СОРТИРОВКИ -->
+                <!-- БЛОК ЗАГОЛОВКА И СОРТИРОВКИ -->
+                <!-- maxWidth="1200" должен совпадать с maxWidth вашей сетки карточек (FlowPane) -->
+                <HBox alignment="CENTER_LEFT" maxWidth="1200" spacing="10">
+
+                    <!-- Заголовок прижат к левому краю -->
+                    <Label style="-fx-font-size: 24px; -fx-font-weight: 600; -fx-text-fill: black ;" text="Каталог" />
+
+                    <!-- "Пружина": занимает всё свободное место между ними -->
+                    <Region HBox.hgrow="ALWAYS" />
+
+                    <!-- Сортировка прижата к правому краю -->
+                    <ComboBox fx:id="sortBox" promptText="Сортировка"
+                              style="-fx-background-color: #ffffff; -fx-text-fill: black; -fx-background-radius: 15;"/>
+
+                </HBox>
+
+                <!-- Сетка карточек -->
+                <FlowPane fx:id="productCardsPane" alignment="CENTER" hgap="20" style="-fx-padding: 0 0 10 0;" vgap="20" maxWidth="1200" />
+
+                <!-- 🔥 ВОТ ЭТОТ НОВЫЙ БЛОК: Панель переключения страниц -->
+                <HBox fx:id="paginationContainer" alignment="CENTER" spacing="8" style="-fx-padding: 10 0 20 0;" />
+
+            </VBox>
+        </center>
+
+        <right>
+            <!-- Правая панель теперь будет четко закреплена у правого края окна -->
+            <VBox style="-fx-padding: 10 10 0 0;  -fx-background-color: #E3E3E3;">
+                <Button fx:id="filterBtn" text="Фильтры" onAction="#toggleFilters"
+                        style="-fx-background-color: #ffffff; -fx-text-fill: black ; -fx-cursor: hand; -fx-padding: 10; -fx-font-size: 16px;  -fx-border-radius: 15; -fx-background-radius: 15; "/>
+
+                <VBox fx:id="filterSidebar" managed="false" visible="false"
+                      style="-fx-background-color:#ffffff; -fx-padding: 20; -fx-border-color: #ffffff; -fx-border-width: 1; -fx-border-radius: 15; -fx-background-radius: 15;"
+                      prefWidth="270" spacing="15">
+
+
+                    <!-- Замени блок фильтра цены на этот: -->
+                    <Label text="Цена" style="-fx-text-fill: #aaa; -fx-font-size: 16px;"/>
+                    <HBox spacing="10">
+                        <TextField fx:id="minPriceField" promptText="От" prefWidth="100" style="-fx-text-fill: #aaa; -fx-font-size: 16px;-fx-background-color: #E3E3E3; -fx-border-radius: 15; -fx-background-radius: 15;"/>
+                        <TextField fx:id="maxPriceField" promptText="До" prefWidth="100" style="-fx-text-fill: #aaa; -fx-font-size: 16px; -fx-background-color: #E3E3E3; -fx-border-radius: 15; -fx-background-radius: 15;"/>
+                    </HBox>
+
+                    <Label text="Пол" style="-fx-text-fill: #aaa; -fx-font-size: 16px;"/>
+                    <ComboBox fx:id="genderFilter" promptText="Выберите пол" maxWidth="Infinity" style="-fx-text-fill: #aaa; -fx-font-size: 16px; -fx-background-color: #E3E3E3; -fx-border-radius: 15; -fx-background-radius: 15;"/>
+
+                    <Label text="Цвет" style="-fx-text-fill: #aaa; -fx-font-size: 16px; "/>
+                    <ComboBox fx:id="colorFilter" promptText="Выберите цвет" maxWidth="Infinity" style="-fx-text-fill: #aaa; -fx-font-size: 16px; -fx-background-color: #E3E3E3; -fx-border-radius: 15; -fx-background-radius: 15;"/>
+
+                    <Label text="Сезон" style="-fx-text-fill: #aaa; -fx-font-size: 16px;"/>
+                    <ComboBox fx:id="seasonFilter" promptText="Выберите сезон" maxWidth="Infinity" style="-fx-text-fill: #aaa; -fx-font-size: 16px;-fx-background-color: #E3E3E3; -fx-border-radius: 15; -fx-background-radius: 15;"/>
+
+                    <Label text="Материал" style="-fx-text-fill: #aaa; -fx-font-size: 16px;"/>
+                    <ComboBox fx:id="materialFilter" promptText="Выберите материал" maxWidth="Infinity" style="-fx-text-fill: #aaa; -fx-font-size: 16px;-fx-background-color: #E3E3E3; -fx-border-radius: 15; -fx-background-radius: 15;"/>
+
+                    <Label text="Категория" style="-fx-text-fill: #aaa; -fx-font-size: 16px;"/>
+                    <ComboBox fx:id="categoryFilter" promptText="Выберите категорию" maxWidth="Infinity" style="-fx-text-fill: #aaa; -fx-font-size: 16px;  -fx-background-color: #E3E3E3; -fx-border-radius: 15; -fx-background-radius: 15; "/>
+
+
+                    <Button text="Сбросить" onAction="#resetFilters" maxWidth="Infinity" style="-fx-background-color: #333; -fx-text-fill: white; -fx-font-size: 16px;   -fx-border-radius: 15; -fx-background-radius: 15; "/>
+                </VBox>
+            </VBox>
+        </right>
+    </BorderPane>
+</ScrollPane>
