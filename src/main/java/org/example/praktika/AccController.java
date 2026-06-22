@@ -6,18 +6,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 import java.io.IOException;
-import java.util.List;
 
 public class AccController {
 
@@ -27,18 +23,14 @@ public class AccController {
 
     private Form1 mainController;
     private final ProductDAO productDAO = new ProductDAO();
-
-
     private long currentUserId = 1;
 
     public void setMainController(Form1 controller) {
         this.mainController = controller;
 
-
         if (controller != null) {
             this.currentUserId = controller.getCurrentUserId();
         }
-
         loadAccountInfo();
     }
 
@@ -50,7 +42,6 @@ public class AccController {
                 loginLabel.setText(login);
             }
         }
-
 
         handleShowHistory();
     }
@@ -85,7 +76,6 @@ public class AccController {
                     return;
                 }
 
-
                 for (Order order : orders) {
                     ordersContainer.getChildren().add(createOrderCard(order));
                 }
@@ -96,7 +86,7 @@ public class AccController {
                 ordersContainer.getChildren().clear();
                 Label errorLabel = new Label("Не удалось загрузить историю покупок.");
                 errorLabel.setStyle("-fx-text-fill: #e57373; -fx-font-size: 14px;");
-                ordersContainer.getChildren().add(errorLabel); // Вот так отлично!
+                ordersContainer.getChildren().add(errorLabel);
             });
             return null;
         });
@@ -108,9 +98,7 @@ public class AccController {
         card.setSpacing(15);
         card.setPadding(new Insets(12));
         card.setAlignment(Pos.CENTER_LEFT);
-
         card.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 10; -fx-border-color: #E0E0E0; -fx-border-radius: 10;");
-
         String productName = "Товар удален или недоступен";
         String productDetails = "Параметры неизвестны";
         String imageUrl = null;
@@ -145,11 +133,11 @@ public class AccController {
         HBox.setHgrow(textBlock, Priority.ALWAYS);
 
         Label titleLabel = new Label(productName);
-        titleLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #212121;"); // Темный текст
+        titleLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #212121;");
         titleLabel.setWrapText(true);
 
         Label descLabel = new Label(productDetails);
-        descLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #757575;"); // Серый текст
+        descLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #757575;");
 
         String rawDate = order.getCreatedAt();
         String formattedDate = (rawDate != null && rawDate.length() >= 10) ? rawDate.substring(0, 10) : "Не указана";
@@ -157,7 +145,7 @@ public class AccController {
         dateLabel.setStyle("-fx-font-size: 11px; -fx-text-fill: #9E9E9E;");
 
         Label emailLabel = new Label("Email: " + (order.getEmail() != null ? order.getEmail() : "—"));
-        emailLabel.setStyle("-fx-font-size: 11px; -fx-text-fill: #b388ff;"); // Акцентный фиолетовый
+        emailLabel.setStyle("-fx-font-size: 11px; -fx-text-fill: #b388ff;");
 
         Label addrLabel = new Label("Адрес: " + (order.getDeliveryAddress() != null ? order.getDeliveryAddress() : "—"));
         addrLabel.setStyle("-fx-font-size: 11px; -fx-text-fill: #757575;");
@@ -173,7 +161,7 @@ public class AccController {
         qtyLabel.setStyle("-fx-font-size: 13px; -fx-text-fill: #212121;");
 
         Label costLabel = new Label(String.format("%.2f ₽", order.getTotalPrice()));
-        costLabel.setStyle("-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #212121;"); // Темная цена
+        costLabel.setStyle("-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #212121;");
 
         priceBlock.getChildren().addAll(qtyLabel, costLabel);
 

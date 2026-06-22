@@ -15,8 +15,6 @@ public class ProductDAO extends SupabaseDAO {
     }
 
 
-    // 1. ТОВАРЫ
-
     public CompletableFuture<List<Product>> getAllProducts() {
         String path = "/products?select=*,product_variants(*)&order=id.asc";
         HttpRequest request = createBaseRequestBuilder(path).GET().build();
@@ -89,15 +87,6 @@ public class ProductDAO extends SupabaseDAO {
     }
 
 
-    // 2. КОРЗИНА
-
-
-//    public CompletableFuture<List<CartItem>> getCartItems(long userId) {
-//        String path = "/cart_items?user_id=eq." + userId + "&select=*,product_variants(*,products(*))";
-//        HttpRequest request = createBaseRequestBuilder(path).GET().build();
-//        return sendAndDeserializeList(request, new TypeReference<List<CartItem>>() {}, "getCartItems");
-//    }
-
     public CompletableFuture<List<CartItem>> getCartItems(long userId) {
         System.out.println("DEBUG DAO: Запрос корзины для пользователя ID = " + userId); // Сразу увидим, не слетел ли ID
         String path = "/cart_items?user_id=eq." + userId + "&select=*,product_variants(*,products(*))";
@@ -153,9 +142,7 @@ public class ProductDAO extends SupabaseDAO {
     public CompletableFuture<Boolean> clearCart(long userId) {
         return sendDeleteRequest("/cart_items?user_id=eq." + userId, "clearCart");
     }
-
-
-    // 3. ЗАКАЗЫ
+    
 
 
     public CompletableFuture<Boolean> createOrder(long userId, int productVariantId, int quantity, double totalPrice) {

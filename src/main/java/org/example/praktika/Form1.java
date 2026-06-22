@@ -31,7 +31,6 @@ public class Form1 {
     private final ProductDAO productDAO = new ProductDAO();
 
     @FXML private ComboBox<String> sortBox;
-
     @FXML private Label adminPanelBtn;
     @FXML private Node filterBtn;
     @FXML private ImageView accImage;

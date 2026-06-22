@@ -8,7 +8,6 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,7 +15,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class AdminPanelController {
-
 
     @FXML private Label ordersCountLabel;
     @FXML private Label avgCheckLabel;
@@ -31,7 +29,6 @@ public class AdminPanelController {
     @FXML private TableColumn<ProductVariant, String> sizeCol;
     @FXML private TableColumn<ProductVariant, Integer> stockCol;
 
-    //Таблица товаров
     @FXML private TableView<Product> productTable;
     @FXML private TableColumn<Product, Integer> idCol;
     @FXML private TableColumn<Product, String> nameCol;
@@ -44,16 +41,12 @@ public class AdminPanelController {
     @FXML private TableColumn <Product, String> imagesCol;
     @FXML private TableColumn <Product, String> descCol;
 
-    //Таблица пользователей
     @FXML private TableView<User> userTable;
     @FXML private TableColumn<User, Integer> userIdCol;
     @FXML private TableColumn<User, String> userLoginCol;
     @FXML private TableColumn<User, String> userRoleCol;
-
-    //Таблица вариаций
     @FXML private TableView<ProductVariant> variantsTable;
 
-    //Таблица заказов
     @FXML private TableView<Order> orderTable;
     @FXML private TableColumn<Order, Integer> orderIdCol;
     @FXML private TableColumn<Order, Long> orderUserIdCol;
@@ -63,7 +56,6 @@ public class AdminPanelController {
     @FXML private TableColumn<Order, String> emailCol;
     @FXML private TableColumn<Order, String> deliveryAddressColl;
 
-    //Поля ввода
     @FXML private TextField nameField, priceField, oldPriceField, brandField, materialField, seasonField, genderField, categoryField;
     @FXML private TextArea descField;
     @FXML private TextField imagesField;
@@ -87,14 +79,12 @@ public class AdminPanelController {
         xAxis.setAnimated(true);
     }
     private void initTables() {
-        // 1. Аналитика (Топ товаров)
+
         prodNameCol.setCellValueFactory(new PropertyValueFactory<>("productName"));
         prodCountCol.setCellValueFactory(new PropertyValueFactory<>("count"));
         prodNameCol.setSortable(true);
         prodCountCol.setSortable(true);
 
-
-        // 2. Вариации
         colorCol.setCellValueFactory(new PropertyValueFactory<>("color"));
         sizeCol.setCellValueFactory(new PropertyValueFactory<>("size"));
         stockCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
@@ -102,7 +92,6 @@ public class AdminPanelController {
         sizeCol.setSortable(true);
         stockCol.setSortable(true);
 
-        // 3. Товары
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
@@ -121,7 +110,6 @@ public class AdminPanelController {
         genderCol.setSortable(true);
         categoryCol.setSortable(true);
 
-        // 4. Пользователи
         userIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         userLoginCol.setCellValueFactory(new PropertyValueFactory<>("username"));
         userRoleCol.setCellValueFactory(new PropertyValueFactory<>("role"));
@@ -129,7 +117,6 @@ public class AdminPanelController {
         userLoginCol.setSortable(true);
         userRoleCol.setSortable(true);
 
-        // 5. Заказы
         orderIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         orderUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
         orderQuantityCol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
@@ -144,7 +131,6 @@ public class AdminPanelController {
         orderDateCol.setSortable(true);
         emailCol.setSortable(true);
         deliveryAddressColl.setSortable(true);
-
 
         productTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, newSel) -> {
             if (newSel != null) {
@@ -306,7 +292,6 @@ public class AdminPanelController {
         }
     }
 
-
     @FXML
     private void handleDeleteVariant() {
         ProductVariant selectedVariant = variantsTable.getSelectionModel().getSelectedItem();
@@ -411,10 +396,11 @@ public class AdminPanelController {
     }
 
 
-
     @FXML private CategoryAxis xAxis;
     @FXML
     private void refreshAnalytics() {
+        initTables();
+        loadData();
         List<Order> allOrders = orderTable.getItems();
         if (allOrders == null || allOrders.isEmpty()) return;
 

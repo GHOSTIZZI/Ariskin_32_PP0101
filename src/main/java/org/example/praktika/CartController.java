@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class CartController {
-
     private Form1 mainController;
 
     @FXML private VBox cartItemsContainer;
@@ -31,17 +30,13 @@ public class CartController {
     private final CartDAO cartDAO = new CartDAO();
     private final ProductDAO productDAO = new ProductDAO();
     private final ObservableList<CartItem> cartData = FXCollections.observableArrayList();
-
-
     private long currentUserId = -1;
-
     public void setCurrentUserId(long id) {
         this.currentUserId = id;
     }
 
     @FXML
     public void initialize() {
-        // Устанавливаем варианты оплаты
         paymentMethodComboBox.setItems(FXCollections.observableArrayList("При получении", "Имитация онлайн-оплаты"));
         paymentMethodComboBox.setPromptText("Выберите способ оплаты");
     }
@@ -51,15 +46,10 @@ public class CartController {
     public void initCart(long userId, Form1 mainController) {
         this.currentUserId = userId;
         this.mainController = mainController;
-
         System.out.println("DEBUG: Инициализация корзины для пользователя ID = " + this.currentUserId);
-
-
         if (checkoutFormPane != null) checkoutFormPane.setVisible(false);
         if (cartScrollPane != null) cartScrollPane.setVisible(true);
         if (checkoutActionButton != null) checkoutActionButton.setDisable(false);
-
-
         loadCart();
     }
 
@@ -71,7 +61,6 @@ public class CartController {
 
         cartItemsContainer.setAlignment(Pos.TOP_LEFT);
         cartItemsContainer.getChildren().clear();
-
 
         Label loadingLabel = new Label("Загрузка вашей корзины...");
         loadingLabel.setStyle("-fx-text-fill: #757575; -fx-font-size: 16px;");
@@ -107,7 +96,6 @@ public class CartController {
             showEmptyCartMessage();
             return;
         }
-
 
         cartItemsContainer.setAlignment(Pos.TOP_LEFT);
 

@@ -25,7 +25,6 @@ public class ProductDetailController {
     @FXML private Button btnPrevImg;
     @FXML private Button btnNextImg;
     @FXML private HBox thumbnailsContainer;
-
     @FXML private Label categoryLabel;
     @FXML private Label genderLabel;
     @FXML private Label nameLabel;
@@ -35,7 +34,6 @@ public class ProductDetailController {
     @FXML private Label materialLabel;
     @FXML private Label seasonLabel;
     @FXML private Label descriptionLabel;
-
     @FXML private FlowPane variantsPane;
     @FXML private Button addToCartButton;
 
@@ -51,7 +49,6 @@ public class ProductDetailController {
     public void setMainController(Form1 mainController) {
         this.mainController = mainController;
     }
-
 
     public void setCurrentUserId(long userId) {
         this.currentUserId = userId;
@@ -101,7 +98,6 @@ public class ProductDetailController {
             return;
         }
 
-
         int inCartQuantity = cartItems.stream()
                 .filter(item -> item.getProductVariantId() == selectedVariant.getId())
                 .mapToInt(CartItem::getQuantity)
@@ -138,7 +134,6 @@ public class ProductDetailController {
         variantsPane.getChildren().clear();
         ToggleGroup sizeGroup = new ToggleGroup();
 
-
         String baseStyle = "-fx-background-radius: 16; -fx-font-size: 16px; -fx-padding: 8 12; ";
         String disabledStyle = baseStyle + "-fx-background-color: #e0e0e0; -fx-text-fill: #a0a0a0; -fx-opacity: 0.5;";
         String selectedStyle = baseStyle + "-fx-background-color: #2196f3; -fx-text-fill: white;";
@@ -152,7 +147,7 @@ public class ProductDetailController {
                 sizeBtn.setToggleGroup(sizeGroup);
                 sizeBtn.setUserData(variant);
 
-                // Фильтр остатков
+
                 int inCartQuantity = cartItems.stream()
                         .filter(item -> item.getProductVariantId() == variant.getId())
                         .mapToInt(CartItem::getQuantity)
@@ -210,7 +205,6 @@ public class ProductDetailController {
         addToCartButton.setDisable(true);
         addToCartButton.setText("Добавление...");
 
-        // 🔥 ИСПРАВЛЕНИЕ: Отправляем запрос с ID текущего юзера
         productDAO.addToCart(currentUserId, selectedVariant.getId(), 1)
                 .thenAccept(success -> {
                     Platform.runLater(() -> {
@@ -262,7 +256,7 @@ public class ProductDetailController {
             priceLabel.setText(String.format("%.2f ₽", currentProduct.getPrice()));
             priceLabel.setStyle("-fx-text-fill: #b388ff; -fx-font-size: 20px; -fx-font-weight: bold;");
         }
-        // -----------------------------------------------
+
 
         brandLabel.setText("Бренд: " + currentProduct.getBrand());
         materialLabel.setText("Материал: " + currentProduct.getMaterial());
@@ -270,10 +264,8 @@ public class ProductDetailController {
         genderLabel.setText("Пол: " + currentProduct.getGender());
         categoryLabel.setText("Категория: " + currentProduct.getCategory());
         descriptionLabel.setText(currentProduct.getDescription());
-
         stockLabel.setText("Выберите размер");
         stockLabel.setStyle("-fx-text-fill: #666666; -fx-font-weight: bold;");
-
         currentImageIndex = 0;
         updateImage();
         renderThumbnails();
